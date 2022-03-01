@@ -1,0 +1,14 @@
+<mat-card style="background: lightgrey">
+  <mat-card-title style="color: black">Equipments</mat-card-title>
+  <mat-card-content></mat-card-content>
+</mat-card>
+<mat-tab-group>
+  <mat-tab label="list" style="color: black">
+    <div class="equipment-table">
+      <app-table [tableData]="equipmentTableData" [tableColumn]="equipmentColumns"></app-table>
+    </div>
+  </mat-tab>
+  <mat-tab label="Search">
+    <app-search-equipment></app-search-equipment>
+  </mat-tab>
+</mat-tab-group>
