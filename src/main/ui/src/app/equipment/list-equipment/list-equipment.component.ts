@@ -16,8 +16,8 @@ export class ListEquipmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.equipmentService.retrieveAllEquipments().subscribe(e => {
-      this.equipmentTableData = e;
+    this.equipmentService.retrieveAllEquipments().subscribe(equipments => {
+      this.equipmentTableData = equipments;
     });
   }
 

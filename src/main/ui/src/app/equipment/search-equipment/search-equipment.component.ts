@@ -27,9 +27,7 @@ export class SearchEquipmentComponent implements OnInit {
         else {
           this.equipmentTableData = [];
         }
-      }, error => {
-        //TODO - handle
-      })
+      });
     }
   }
 }
