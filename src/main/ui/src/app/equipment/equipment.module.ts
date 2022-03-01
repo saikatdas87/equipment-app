@@ -7,11 +7,13 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import { SearchEquipmentComponent } from './search-equipment/search-equipment.component';
+import {ListEquipmentComponent} from "./list-equipment/list-equipment.component";
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    SearchEquipmentComponent
+    SearchEquipmentComponent,
+    ListEquipmentComponent
   ],
   imports: [
     CommonModule,

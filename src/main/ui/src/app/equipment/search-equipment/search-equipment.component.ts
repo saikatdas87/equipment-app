@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Equipment} from "../model/equipment.model";
+import {Equipment, equipmentColumns} from "../model/equipment.model";
 import {TableColumn} from "../../shared/table/table.component";
-import {equipmentColumns} from "../dashboard/dashboard.component";
 import {EquipmentService} from "../service/equipment.service";
 
 @Component({
