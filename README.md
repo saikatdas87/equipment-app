@@ -41,7 +41,7 @@ For further reference, please consider the following sections:
 
 #### Start Elasticsearch 
 The application connects to elasticsearch instance. The details(url, port) are configured 
-in application.yaml
+in application.properties
 
 To run elasticseach in docker container locally run below :
  ```docker run -p 9200:9200 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.16.2```
@@ -52,7 +52,7 @@ To run and access the backend application with only please follow below commands
     mvn spring-boot:run
 ```
 
-Can be ran directly from IntelliJ IDEA by going to `src/main/java/com/saikat/api/countryservice/CountryServiceApplication.java` and clicking run.
+Can be ran directly from IntelliJ IDEA by going to `src/main/java/io/saikat/spring/elasticsearch/equipmentapp/EquipmentApplication.java` and clicking run.
 
 Build Spring Boot Project with Maven
 
