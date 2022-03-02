@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
+import {MatTabChangeEvent} from "@angular/material/tabs";
 
 
 @Component({
@@ -8,4 +9,9 @@ import {Component, OnInit} from '@angular/core';
 })
 export class DashboardComponent {
   appTitle = 'Equipments';
+  tabIndex: number = 0;
+
+  tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
+    this.tabIndex = tabChangeEvent.index;
+  }
 }

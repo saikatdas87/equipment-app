@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {Equipment, equipmentColumns} from "../model/equipment.model";
 import {TableColumn} from "../../shared/table/table.component";
 import {EquipmentService} from "../service/equipment.service";
@@ -9,8 +9,11 @@ import {EquipmentService} from "../service/equipment.service";
   styleUrls: ['./search-equipment.component.less']
 })
 export class SearchEquipmentComponent implements OnInit {
+
+  @Input() tabIndex = 0;
   equipmentTableData: Equipment[] = [];
   equipmentColumns?: TableColumn[] = equipmentColumns;
+  @ViewChild('searchEquipment') equipmentIdInput: ElementRef | undefined;
 
   constructor(private equipmentService: EquipmentService) {
   }
@@ -30,4 +33,15 @@ export class SearchEquipmentComponent implements OnInit {
       });
     }
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['tabIndex']) {
+      if (changes['tabIndex'].currentValue === 0) {
+        this.equipmentTableData = [];
+        // @ts-ignore
+        this.equipmentIdInput?.nativeElement.value = '';
+      }
+    }
+  }
+
 }

@@ -2,11 +2,11 @@
   <mat-card-title id="equipment-app-title" style="color: black">{{appTitle}}</mat-card-title>
   <mat-card-content></mat-card-content>
 </mat-card>
-<mat-tab-group>
+<mat-tab-group (selectedTabChange)="tabChanged($event)">
   <mat-tab label="list" style="color: black" id="equipment-list-tab">
     <app-list-equipment></app-list-equipment>
   </mat-tab>
   <mat-tab label="Search">
-    <app-search-equipment id="equipment-search-tab"></app-search-equipment>
+    <app-search-equipment id="equipment-search-tab" [tabIndex]="tabIndex"></app-search-equipment>
   </mat-tab>
 </mat-tab-group>

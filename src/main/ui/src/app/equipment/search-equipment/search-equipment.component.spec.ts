@@ -13,6 +13,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {CommonModule} from "@angular/common";
+import {SimpleChanges} from "@angular/core";
 
 describe('SearchEquipmentComponent', () => {
   let component: SearchEquipmentComponent;
@@ -51,6 +52,7 @@ describe('SearchEquipmentComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SearchEquipmentComponent);
     component = fixture.componentInstance;
+    component.tabIndex = 1;
     fixture.detectChanges();
   });
 
@@ -65,5 +67,15 @@ describe('SearchEquipmentComponent', () => {
     fixture.detectChanges();
 
     expect(equipmentService.searchById).toHaveBeenCalledWith('1111');
+  });
+
+  it('Resets the values on tab change', () => {
+    component.equipmentTableData = [{id: '111'} as any as Equipment];
+    fixture.detectChanges();
+
+    component.ngOnChanges({tabIndex: {currentValue: 0}} as any as SimpleChanges) ;
+    fixture.detectChanges();
+
+    expect(component.equipmentTableData.length).toEqual(0);
   });
 });

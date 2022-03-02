@@ -1,6 +1,6 @@
 <mat-form-field class="equipment-search-box" appearance="fill">
   <mat-label>Search by equipment Id </mat-label>
-  <input class="search-id" matInput (keyup.enter)="findEquipment($event.target)">
+  <input class="search-id" matInput (keyup.enter)="findEquipment($event.target)" #searchEquipment>
 </mat-form-field>
 <div class="search-table">
   <app-table *ngIf="equipmentTableData.length > 0" [tableData]="equipmentTableData" [tableColumn]="equipmentColumns"></app-table>
