@@ -59,6 +59,12 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-test</artifactId>
+			<version>3.4.15</version>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 

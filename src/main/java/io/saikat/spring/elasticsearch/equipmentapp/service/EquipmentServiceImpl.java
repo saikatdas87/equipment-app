@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,34 +24,32 @@ public class EquipmentServiceImpl implements EquipmentService {
   private final EquipmentRepository equipmentRepo;
 
   @Override
-  public List<Equipment> fetchEquipments(String limit) {
+  public Flux<Equipment> fetchEquipments(String limit) {
     try {
       val sort = Sort.by(Sort.Direction.ASC, "contractEndDate");
       if (!ObjectUtils.isEmpty(limit)) {
-        val equipmentPage = equipmentRepo.findAll(PageRequest.of(0, Integer.parseInt(limit), sort));
-        return equipmentPage.get().collect(Collectors.toList());
+        val equipmentPage = equipmentRepo.findAll(sort);
+        return equipmentPage.take(Integer.parseInt(limit));
       }
-      return StreamSupport.stream(equipmentRepo.findAll(sort).spliterator(), false).toList();
+      return equipmentRepo.findAll(sort);
     } catch (NumberFormatException ne) {
       throw new InvalidRequestParamException("Invalid limit parameter : " + limit);
     }
   }
 
   @Override
-  public Equipment indexEquipment(Equipment equipment) {
-    if (isEquipmentAlreadyIndexed(equipment.getId())) {
-      throw new EquipmentAlreadyIndexException("Equipment already exists with id : " + equipment.getId());
-    }
-    return equipmentRepo.save(equipment);
+  public Mono<Equipment> indexEquipment(Equipment equipment) {
+    return isEquipmentAlreadyIndexed(equipment.getId())
+        .flatMap(__ -> Mono.<Equipment>error(new EquipmentAlreadyIndexException("Equipment already exists with id : " + equipment.getId())))
+        .switchIfEmpty(equipmentRepo.save(equipment));
   }
 
   @Override
-  public Optional<Equipment> fetchEquipmentById(String equipmentId) {
+  public Mono<Equipment> fetchEquipmentById(String equipmentId) {
     return equipmentRepo.findById(equipmentId);
   }
 
-  private Boolean isEquipmentAlreadyIndexed(String equipmentId) {
-    val equipment = equipmentRepo.findById(equipmentId);
-    return equipment.isPresent();
+  private Mono<Equipment> isEquipmentAlreadyIndexed(String equipmentId) {
+    return equipmentRepo.findById(equipmentId);
   }
 }

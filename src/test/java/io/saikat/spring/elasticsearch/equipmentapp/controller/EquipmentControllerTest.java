@@ -18,6 +18,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,20 +48,21 @@ public class EquipmentControllerTest {
 
   @Test
   public void fetchEquipment() throws Exception {
-    val equipments = List.of(Equipment.builder().id("111").build());
+    val equipments = Flux.just(Equipment.builder().id("111").build());
     given(equipmentService.fetchEquipments("10")).willReturn(equipments);
     webClient.get().uri("/equipment-service/v1/equipment/search/{limit}", "10")
         .header(HttpHeaders.ACCEPT, "application/json")
         .exchange()
         .expectStatus().isOk()
         .expectBodyList(Equipment.class)
-        .contains(equipments.get(0));
+        .contains(equipments.blockFirst());
   }
 
   @Test
   public void createEquipment() {
+
     val equipment = Equipment.builder().id("111").build();
-    given(equipmentService.indexEquipment(equipment)).willReturn(equipment);
+    given(equipmentService.indexEquipment(equipment)).willReturn(Mono.just(equipment));
     webClient.post()
         .uri("/equipment-service/v1/equipment/index")
         .contentType(MediaType.APPLICATION_JSON)
@@ -84,7 +87,7 @@ public class EquipmentControllerTest {
   @Test
   public void searchEquipment() throws Exception {
     val equipment = Equipment.builder().id("10").build();
-    given(equipmentService.fetchEquipmentById("10")).willReturn(Optional.of(equipment));
+    given(equipmentService.fetchEquipmentById("10")).willReturn(Mono.just(equipment));
     webClient.get().uri("/equipment-service/v1/equipment/{equipmentId}", "10")
         .header(HttpHeaders.ACCEPT, "application/json")
         .exchange()
