@@ -30,7 +30,7 @@ public class EquipmentServiceImplTest {
 
   private EquipmentServiceImpl equipmentService;
 
-  private final Sort sort = Sort.by(Sort.Direction.ASC, "contactStartDate");
+  private final Sort sort = Sort.by(Sort.Direction.ASC, "contractEndDate");
 
   @BeforeEach
   public void init() {
