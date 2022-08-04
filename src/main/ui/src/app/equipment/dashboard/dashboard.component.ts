@@ -1,11 +1,10 @@
-import {Component} from '@angular/core';
-import {MatTabChangeEvent} from "@angular/material/tabs";
-
+import { Component } from '@angular/core';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.less']
+  styleUrls: ['./dashboard.component.less'],
 })
 export class DashboardComponent {
   appTitle = 'Equipments';
@@ -13,5 +12,5 @@ export class DashboardComponent {
 
   tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
     this.tabIndex = tabChangeEvent.index;
-  }
+  };
 }
